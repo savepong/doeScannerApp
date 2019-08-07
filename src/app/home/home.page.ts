@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { BarcodeScanner } from "@ionic-native/barcode-scanner/ngx";
 import { HttpClient } from "@angular/common/http";
+import { AlertController } from "@ionic/angular";
 
 @Component({
   selector: "app-home",
@@ -10,7 +11,8 @@ import { HttpClient } from "@angular/common/http";
 export class HomePage {
   constructor(
     private barcodeScanner: BarcodeScanner,
-    private http: HttpClient
+    private http: HttpClient,
+    public alert: AlertController
   ) {
     // this.getData();
     this.startScan();
@@ -72,8 +74,15 @@ export class HomePage {
         informid: id
       })
       .subscribe(
-        data => {
-          this.data = data;
+        res => {
+          const data = JSON.parse(JSON.stringify(res));
+          if (data.return === "00") {
+            this.data = data;
+          } else {
+            this.isScanned = false;
+            this.presentAlert("ไม่มีข้อมูลการแจ้งทำงาน");
+          }
+
           this.onLoading = false;
         },
         error => {
@@ -81,5 +90,16 @@ export class HomePage {
           console.log(error);
         }
       );
+  }
+
+  async presentAlert(message = "") {
+    const alert = await this.alert.create({
+      header: "แจ้งเตือน",
+      // subHeader: 'Subtitle',
+      message,
+      buttons: ["ตกลง"]
+    });
+
+    await alert.present();
   }
 }
