@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { BarcodeScanner } from "@ionic-native/barcode-scanner/ngx";
 import { HttpClient } from "@angular/common/http";
-import { AlertController } from "@ionic/angular";
+import { Platform, AlertController } from "@ionic/angular";
 
 @Component({
   selector: "app-home",
@@ -10,12 +10,14 @@ import { AlertController } from "@ionic/angular";
 })
 export class HomePage {
   constructor(
+    private platform: Platform,
     private barcodeScanner: BarcodeScanner,
     private http: HttpClient,
     public alert: AlertController
   ) {
     // this.getData();
     this.startScan();
+    // this.platform = platform;
   }
 
   data: any = {
@@ -102,4 +104,8 @@ export class HomePage {
 
     await alert.present();
   }
+
+  exitApp(){
+    navigator['app'].exitApp()
+ }
 }
