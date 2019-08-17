@@ -20,7 +20,8 @@ export class HomePage {
     // this.platform = platform;
   }
 
-  data: any = {
+  data: any;
+  dataDefault: any = {
     aliCancel: "",
     ename: "",
     fname: "",
@@ -58,18 +59,19 @@ export class HomePage {
       .then(barcodeData => {
         // console.log(barcodeData);
         this.getData(barcodeData.text);
-        console.log(this.data);
+        // console.log(this.data);
         this.isScanned = true;
         // this.startScan();
       })
       .catch(err => {
         this.isScanned = true;
-        console.log("Error", err);
+        // console.log("Error", err);
       });
   }
 
   getData(id) {
     this.onLoading = true;
+    this.data = this.dataDefault;
     this.http
       .post("http://122.155.84.131/doe/doefilealien/selectcheckinformmobile", {
         apikey: "ebefb44c35628c26848b6d71993994470fa24cff",
@@ -89,7 +91,7 @@ export class HomePage {
         },
         error => {
           this.onLoading = false;
-          console.log(error);
+          // console.log(error);
         }
       );
   }
