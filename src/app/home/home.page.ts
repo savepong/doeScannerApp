@@ -16,6 +16,7 @@ export class HomePage {
     public alert: AlertController
   ) {
     // this.getData();
+    this.data = this.dataDefault;
     this.startScan();
     // this.platform = platform;
   }
