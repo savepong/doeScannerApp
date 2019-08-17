@@ -107,7 +107,32 @@ export class HomePage {
     await alert.present();
   }
 
+  async exitConfirm() {
+    const alert = await this.alert.create({
+      header: 'ยืนยันการออก',
+      message: 'คุณต้องการออกจากแอปพลิเคชัน ใช่หรือไม่',
+      buttons: [
+        {
+          text: 'ยกเลิก',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            // console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'ยืนยัน',
+          handler: () => {
+            this.exitApp();
+            // console.log('Confirm Okay');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
   exitApp(){
     navigator['app'].exitApp()
- }
+  }
 }
