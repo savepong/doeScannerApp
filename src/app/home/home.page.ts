@@ -135,5 +135,6 @@ export class HomePage {
 
   exitApp(){
     navigator['app'].exitApp()
+    // console.log(navigator);
   }
 }
